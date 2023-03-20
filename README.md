@@ -34,9 +34,13 @@
 
 我的经验是代理服务器用hyster，连接会更稳定。不过如果连接不稳定，导致一次对话被中断，你也可以用脚本读取之前的历史聊天记录，继续之前的对话。
 
+# 免费帐号
+
+1. https://www.bilibili.com/video/BV1e24y1u7My/
+
 # gpt4
 
-我在[b站](https://www.bilibili.com/video/BV1e24y1u7My/)拿到的免费账号现在只能用gpt3.5，没有试用gpt4的权限。
+免费账号现在只能用gpt3.5，没有试用gpt4的权限。
 
 # 问题
 
