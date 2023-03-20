@@ -8,21 +8,27 @@
 
 2. 打开命令行，输入pip install requests。确保requests下载成功，安装完成。
 
-3. 点击右上角的code -> download zip。并且解压。
+3. 点击右上角的code -> download zip，下载这个repo。并且解压。或者只下载multi-turn.py也可以，至少现在这里只有这一个脚本。
 
-4. 在解压后的目录下新建一个config.py文件，在其中填写代理服务器和API key。这个API key我会用微信发给你。
+4. 在解压后，新建一个config.py文件，放在multi-turn.py同一个目录中。在其中填写代理服务器和API key。这个API key我会用微信发给你。
 
 # 运行
 
 打开命令行，用python ./multi-turn.py <保存聊天记录的文件> 的方式执行。
 
-如果不填<保存聊天记录的文件>，会生成一个临时文件放在history目录下。你可以用记事本（可能不支持utf8）或者notepad++打开history中的文件看其中的聊天记录，它的保存格式是utf8。
-
 也可以双击或是右键multi-turn.py运行。
 
-如果聊天记录中有内容，就可以继续上次的对话。但是对话总长度不允许超出4000 token。
-
 脚本会循环执行，一问一答，直到你按ctrl+d或者ctrl+c退出。
+
+# 聊天记录
+
+默认聊天记录会保存在history目录下，没有txt json之类的后缀名。
+
+你可以用记事本或者notepad++打开这些文件，它们的保存格式是utf8。记事本或许不支持utf8，打开可能会有乱码。
+
+如果用脚本读取一个有内容的聊天记录，就可以继续上次的对话。
+
+但是对话总长度不允许超出4000 token。token是openai定义的一个单位，大约等同于英语的单词。
 
 # 代理服务器
 
