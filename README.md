@@ -46,4 +46,4 @@
 
 # 问题
 
-有任何问题或是要求可以到[Issues](//github.com/w2404/chat/issues)中提出来。这比在微信中聊起来方便。你需要注册一个github账号，用outlook邮箱，163邮箱什么的就可以。
+有任何问题或是要求可以到[Issues](//github.com/w2404/chat/issues/new)中提出来。这比在微信中聊起来方便。你需要注册一个github账号，用outlook邮箱，163邮箱什么的就可以。
