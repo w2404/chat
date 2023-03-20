@@ -5,6 +5,8 @@ import json
 import sys
 import config
 
+#分隔符
+split='------------------------'
 
 def send(messages):
     headers = {"Authorization": "Bearer " + config.key, "Content-Type": "application/json"}
@@ -33,7 +35,7 @@ for m in messages:
     print(m['role'], ':', m['content'])
 
 while True:
-    s = input('user: ')
+    s = input(split+'\nuser: ')
     if len(s.strip())<1:continue
     m1 = {"role": "user", "content": s}
     messages.append(m1)
