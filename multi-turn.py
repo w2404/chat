@@ -29,6 +29,7 @@ open(p_store, 'a').close()
 #读取历史记录
 messages = [json.loads(line) for line in open(p_store)]
 for m in messages:
+    if m['role']=='user':print('------------------------') #加分隔符方便阅读
     print(m['role'], ':', m['content'])
 
 while True:
