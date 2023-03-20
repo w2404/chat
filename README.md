@@ -36,7 +36,7 @@
 
 # gpt4
 
-我在b站拿到的免费账号现在只能用gpt3.5，没有试用gpt4的权限。
+我在[b站](https://www.bilibili.com/video/BV1e24y1u7My/)拿到的免费账号现在只能用gpt3.5，没有试用gpt4的权限。
 
 # 问题
 
