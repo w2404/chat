@@ -8,7 +8,7 @@
 
 2. 打开命令行，输入pip install requests。确保requests下载成功，安装完成。
 
-3. 点击右上角的code -> download zip，下载这个repo。并且解压。或者只下载multi-turn.py也可以，至少现在这里只有这一个脚本。
+3. 点击右上角的code -> download zip，下载这个repo。并且解压。或者只下载[multi-turn.py](multi-turn.py)也可以，至少现在这里只有这一个脚本。
 
 4. 在解压后，新建一个config.py文件，放在multi-turn.py同一个目录中。在其中填写代理服务器和API key。这个API key我会用微信发给你。
 
@@ -33,3 +33,7 @@
 # 代理服务器
 
 我的经验是代理服务器用hyster，连接会更稳定。不过如果连接不稳定，导致脚本断开连接退出，你也可以用脚本读取之前的历史聊天记录，继续之前的对话。
+
+# 感想
+
+真的是好用，在我写这个repo的时候，想到的任何零碎问题（怎么延长git密码的保存时间，怎么在md文件中写一个链接）都可以问gpt，google完全不需要了。
