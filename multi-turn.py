@@ -24,7 +24,7 @@ if len(sys.argv) > 1:
 else:
     import os
     os.makedirs('./history/', exist_ok=True)
-    i = len(os.listdir('./history/'))
+    i = len(os.listdir('./history/'))+1
     p_store = f'./history/{i}'
 print('聊天记录保存在', p_store)
 open(p_store, 'a').close()
