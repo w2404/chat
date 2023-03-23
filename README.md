@@ -1,4 +1,4 @@
-更新：https://freegpt.one/ 可以直接免费用
+更新：https://freegpt.one/ 可以直接免费用，不需要key
 
 更新：因为这个python命令行版本交互界面不够友好，所以我另外写了[html版本](//github.com/w2404/chat-html/)
 
