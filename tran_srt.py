@@ -110,7 +110,8 @@ def transfile(p):
         if not os.path.exists(p_local):
             s=translator(turn)
             with open(p_local,'w') as f:
-                f.write(s)
+                json.dump(s,f)
+                #f.write(s)
         ss+=open(p_local).read()
 
     p_local=f'out/trans-{p.replace("/","-")}'
