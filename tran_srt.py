@@ -8,13 +8,16 @@ OPENAI_API_KEY = config.key #os.environ.get("OPENAI_API_KEY")
 OPENAI_BASE_URL = "https://api.openai.com/v1/chat/completions"
 
 
-def translator(srt):
-    prompt = "You are an expert subtitle translator in all languages. Translate all language subtitle to Chinese subtitle, and keep the original language sentence and the new Chinese subtitle. You need to respond in a fixed format."
+def translator(srt2):
+    srt=''
+    for t in srt2:
+        srt+="["+t['s']+']\n'
+    prompt = "You are an expert subtitle translator in all languages. Translate all language subtitle to Chinese subtitle. You need to respond in a fixed format." #, and keep the original language sentence and the new Chinese subtitle."
 
     few_shot_text_request = (
-        "1\n"
-        "00:00:00,000 --> 00:00:07,800\n"
-        "Ladies and gentlemen, let's welcome Mr. L.M.A.S, the co-founder and CEO at Tesla, and Jack Ma,\n"
+        #"1\n"
+        #"00:00:00,000 --> 00:00:07,800\n"
+        "[Ladies and gentlemen, ]\n[let's welcome Mr. L.M.A.S, the co-founder and CEO at Tesla, and Jack Ma,]\n"
         # "\n"
         # "2\n"
         # "00:00:07,800 --> 00:00:11,680\n"
@@ -22,10 +25,10 @@ def translator(srt):
     )
 
     few_shot_text_response = (
-        "1\n"
-        "00:00:00,000 --> 00:00:07,800\n"
-        "Ladies and gentlemen, let's welcome Mr. L.M.A.S, the co-founder and CEO at Tesla, and Jack Ma,\n"
-        "女士们先生们，让我们欢迎特斯拉公司的联合创始人兼首席执行官L.M.A.S先生和数字合作联合国高级别小组的联合主席马云先生。\n"
+        #"1\n"
+        #"00:00:00,000 --> 00:00:07,800\n"
+        #"Ladies and gentlemen, let's welcome Mr. L.M.A.S, the co-founder and CEO at Tesla, and Jack Ma,\n"
+        "[女士们先生们，]\n[让我们欢迎特斯拉公司的联合创始人兼首席执行官L.M.A.S先生和数字合作联合国高级别小组的联合主席马云先生。]\n"
         # "\n"
         # "2\n"
         # "00:00:07,800 --> 00:00:11,680\n"
@@ -66,24 +69,23 @@ def splitsrc1(p):
     if lines[0][0]=='\ufeff':
         lines[0]=lines[0][1:]
 
-    turn=''
+    turn=[]
     for line in lines:
         r=re.findall('^\d+$',line)
-        if len(r)>0:
-            yield turn
-            turn=''
-        turn+=line
-    yield turn
+        if len(turn)>0:
+            if len(r)>0 :
+                yield {'i':int(turn[0]),'t':turn[1].strip(),'s':' '.join([ss.strip() for ss in turn[2:]])}
+                turn=[]
+        turn+=[line]
+    yield {'i':int(turn[0]),'t':turn[1].strip(),'s':' '.join([ss.strip() for ss in turn[2:]])}
 
 def splitsrc2(turns):
-    s=''
-    i=0
+    s=[]
     for turn in turns:
-        s+=turn
-        i+=1
-        if i%100==0:
+        s+=[turn]
+        if len(s)>50:
             yield s
-            s=''
+            s=[]
     yield s
 
 def localcache(p,fun,*args):
@@ -100,20 +102,23 @@ def transfile(p):
     turns=list(splitsrc1(sys.argv[1]))
     turns2=list(splitsrc2(turns))
     ss=''
-    for i,turn in enumerate(turns2):
-        p_local=f'out/{p.replace("/","-")}-{i:02d}'
+    for turn in turns2: #enumerate(turns2):
+        i=turn[0]['i']
+        p_local=f'out/split1-{p.replace("/","-")}-{i:02d}.json'
         if not os.path.exists(p_local):
             with open(p_local,'w') as f:
-                f.write(turn)
+                json.dump(turn,f,ensure_ascii=False,indent='  ')
+                #f.write(turn)
 
-        p_local=f'out/{p.replace("/","-")}-{i:02d}-trans'
+        p_local=f'out/split2-{p.replace("/","-")}-{i:02d}.json'
         if not os.path.exists(p_local):
-            s=translator(turn)
+            while True:
+                s=translator(turn)
+                if 'choices' in s:break
             with open(p_local,'w') as f:
-                json.dump(s,f)
+                json.dump(s,f,ensure_ascii=False,indent='  ')
                 #f.write(s)
-        ss+=open(p_local).read()
-
+        ss+=json.load(open(p_local))["choices"][0]["message"]["content"].strip()
     p_local=f'out/trans-{p.replace("/","-")}'
     if not os.path.exists(p_local):
         with open(p_local,'w') as f:
@@ -122,7 +127,10 @@ def transfile(p):
 
 if __name__ == "__main__":
     import sys
-    for p in sys.argv[1:]:
+    l=sys.argv[1:]
+    import random
+    random.shuffle(l)
+    for p in l:
         transfile(p)
     #test_srt=open(sys.argv[1]).readlines()
     #test_srt='\n'.join(test_srt[:100])
